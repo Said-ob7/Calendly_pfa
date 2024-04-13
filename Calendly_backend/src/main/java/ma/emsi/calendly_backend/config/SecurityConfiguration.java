@@ -34,13 +34,14 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .formLogin(Customizer.withDefaults())
-//                .authorizeHttpRequests(ar->ar.requestMatchers("/deletePatient/**").hasRole("ADMIN"))
-//                .authorizeHttpRequests(ar->ar.requestMatchers("/admin/**").hasRole("ADMIN"))
-//                .authorizeHttpRequests(ar->ar.requestMatchers("/user/**").hasRole("USER"))
-                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/messages").permitAll() // Allowing access to /messages without authentication
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults()) // Use HTTP Basic authentication with defaults
                 .build();
     }
+
 
 
 
