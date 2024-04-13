@@ -1,12 +1,11 @@
-// @ts-ignore
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import { request, setAuthHeader } from '../axios_helper';
 
-interface State {
+interface AuthContentState {
   data: string[];
 }
 
-export default class AuthContent extends Component<{}, State> {
+export default class AuthContent extends Component<{}, AuthContentState> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -14,43 +13,36 @@ export default class AuthContent extends Component<{}, State> {
     };
   }
 
-  componentDidMount(): void {
-    // Define your username and password
-    const username = "said";
-    const password = "test@123";
-
-    // Encode credentials
-    const encodedCredentials = btoa(`${username}:${password}`);
-
-    // Set up Axios instance with basic authentication
-    const instance = axios.create({
-      baseURL: "http://localhost:8787", // Base URL of your backend API
-      headers: {
-        Authorization: `Basic ${encodedCredentials}`,
-      },
-    });
-
-    // Make API request
-    instance
-      .get("/messages")
+  componentDidMount() {
+    request('GET', '/messages', {})
       .then((response) => {
-        // Handle successful response
         this.setState({ data: response.data });
       })
       .catch((error) => {
-        // Handle error
-        console.error("Error fetching data:", error);
+        if (error.response && error.response.status === 401) {
+          setAuthHeader(null);
+        } else {
+          this.setState({ data: [error.response?.code || ''] });
+        }
       });
   }
 
   render() {
     return (
-      <div>
-        {this.state.data && this.state.data.length > 0 ? (
-          this.state.data.map((line, index) => <p key={index}>{line}</p>)
-        ) : (
-          <p>No data available</p>
-        )}
+      <div className="row justify-content-md-center">
+        <div className="col-4">
+          <div className="card" style={{ width: '18rem' }}>
+            <div className="card-body">
+              <h5 className="card-title">Backend response</h5>
+              <p className="card-text">Content:</p>
+              <ul>
+                {this.state.data.map((line, index) => (
+                  <li key={index}>{line}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

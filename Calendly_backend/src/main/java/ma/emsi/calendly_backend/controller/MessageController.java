@@ -9,9 +9,9 @@ import java.util.List;
 
 @RestController
 public class MessageController {
-    @GetMapping("/messages")
-    public ResponseEntity<List<String>> messages(){
-        return ResponseEntity.ok(Arrays.asList("SAID","FROM","BACKEND"));
-    }
 
+    @GetMapping("/messages")
+    public ResponseEntity<List<String>> messages() {
+        return ResponseEntity.ok(Arrays.asList("MY NAME", "Hamid"));
+    }
 }
