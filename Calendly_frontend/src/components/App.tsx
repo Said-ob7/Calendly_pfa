@@ -1,15 +1,21 @@
 import React from "react";
-import "./App.css";
-import Header from "./Header";
-import reactLogo from "../assets/react.svg";
-import AppContent from "./AppContent.tsx";
+import "../assets/css/App.css";
+import Navbar from "./Navbar.tsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "../Pages/Login.tsx";
+import Home from "../Pages/Home.tsx";
 
 const App: React.FC = () => {
   return (
-    <div>
-      <Header logoSrc={reactLogo} pageTitle="Home Page" />
-      <AppContent />
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route index element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 

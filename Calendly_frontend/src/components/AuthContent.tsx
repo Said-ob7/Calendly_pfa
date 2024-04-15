@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { Component } from 'react';
 import { request, setAuthHeader } from '../axios_helper';
 

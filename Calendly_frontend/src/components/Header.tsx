@@ -9,7 +9,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   return (
     <header className="App-header">
       <img src={props.logoSrc} className="App-logo" alt="logo" />
-      <h1 className="App-title">{props.pageTitle}</h1>
+      <div className="App-title">{props.pageTitle}</div>
     </header>
   );
 };

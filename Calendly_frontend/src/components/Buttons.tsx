@@ -1,23 +1,28 @@
-import * as React from 'react';
+import * as React from "react";
+import { Row } from "reactstrap";
 
 interface ButtonsProps {
-    login: () => void;
-    logout: () => void;
+  login: () => void;
+  logout: () => void;
 }
 
 const Buttons: React.FC<ButtonsProps> = (props) => {
-    return (
-        <div className="row">
-            <div className="col-md-12 text-center" style={{ marginTop: '30px' }}>
-                <button className="btn btn-primary" style={{ margin: '10px' }} onClick={props.login}>
-                    Login
-                </button>
-                <button className="btn btn-dark" style={{ margin: '10px' }} onClick={props.logout}>
-                    Logout
-                </button>
-            </div>
-        </div>
-    );
+  return (
+    <div className="">
+      <button className="fancy" onClick={props.login}>
+        <span className="top-key"></span>
+        <span className="text">Login</span>
+        <span className="bottom-key-1"></span>
+        <span className="bottom-key-2"></span>
+      </button>
+      <button className="fancy" onClick={props.logout}>
+        <span className="top-key"></span>
+        <span className="text">Logout</span>
+        <span className="bottom-key-1"></span>
+        <span className="bottom-key-2"></span>
+      </button>
+    </div>
+  );
 };
 
 export default Buttons;
