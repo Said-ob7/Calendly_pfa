@@ -61,7 +61,7 @@ export default class LoginForm extends React.Component<
 
   render() {
     return (
-      <div className="row justify-content-center">
+      <div className="row justify-content-center  p-5 m-5">
         <div className="col-4">
           <ul
             className="nav nav-pills nav-justified mb-3"

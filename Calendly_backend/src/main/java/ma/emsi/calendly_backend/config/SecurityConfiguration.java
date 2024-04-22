@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequestsConfigurer ->
                         authorizeRequestsConfigurer
                                 // Ensure these endpoints are publicly accessible
-                                .requestMatchers("/Login", "/register").permitAll()
+                                .requestMatchers("/login", "/register").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
         return http.build();

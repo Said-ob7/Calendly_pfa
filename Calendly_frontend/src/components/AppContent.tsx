@@ -2,9 +2,11 @@ import { request, setAuthHeader } from "../axios_helper";
 import React, { Component } from "react";
 import LoginForm from "./LoginForm";
 import AuthContent from "./AuthContent";
+import { Navigate } from "react-router-dom";
 
 interface AppContentState {
   componentToShow: "welcome" | "login" | "messages";
+  isLoggedIn: boolean;
 }
 
 export default class AppContent extends Component<{}, AppContentState> {
@@ -12,6 +14,7 @@ export default class AppContent extends Component<{}, AppContentState> {
     super(props);
     this.state = {
       componentToShow: "login", // Set initial state to "login"
+      isLoggedIn: false,
     };
   }
 
@@ -32,9 +35,11 @@ export default class AppContent extends Component<{}, AppContentState> {
     })
       .then((response) => {
         setAuthHeader(response.data.token);
-        this.setState({ componentToShow: "messages" });
+        this.setState({ componentToShow: "messages", isLoggedIn: true });
+        console.log("login success");
       })
       .catch((error) => {
+        console.error("login failed");
         setAuthHeader(null);
         this.setState({ componentToShow: "welcome" });
       });
@@ -56,22 +61,29 @@ export default class AppContent extends Component<{}, AppContentState> {
     })
       .then((response) => {
         setAuthHeader(response.data.token);
-        this.setState({ componentToShow: "messages" });
+        this.setState({ componentToShow: "messages", isLoggedIn: true });
+        console.log("register success");
       })
       .catch((error) => {
         setAuthHeader(null);
         this.setState({ componentToShow: "welcome" });
+        console.error("register success");
       });
   };
 
   render() {
+    const { componentToShow, isLoggedIn } = this.state;
+
+    if (isLoggedIn) {
+      return <Navigate to="/home" replace />;
+    }
+
     return (
       <>
-        {this.state.componentToShow === "login" && (
+        {componentToShow === "login" && (
           <LoginForm onLogin={this.onLogin} onRegister={this.onRegister} />
         )}
-        {this.state.componentToShow === "messages" && <AuthContent />}
-        {/* No need to conditionally render login button or logout button */}
+        {componentToShow === "messages" && <AuthContent />}
       </>
     );
   }
